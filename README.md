@@ -21,4 +21,9 @@ Once you have it in your DWH staging area, you can use SQL or maybe Spark code t
 Which patterns is better? It might depend on your preferred toolset (language) and data volume (maybe Python is not enough to clean up 1 million records?). In most cases, when we are not talking about Big Data, ETL is enough. Even if it’s few hundred thousends of records per download, your Python cleanup code can finish the transformations in less then a minute. And this pattern seem to be fairly easy to use.          
 If you prefer cleaning data with Spark or SQL, or volumes are big enough to require some serious processing power, ELT is more useful for you.
 
+## Technical timestamps
+I mentioned it few time, so to clarify: what are technical timestamps. Those are timestamps you add to each and every record whenever you process the data. At my current company, we are using Airflow to orchestrate the ETL pipelines, and this process adds 3 timestamps to each record:
+
+
+
 

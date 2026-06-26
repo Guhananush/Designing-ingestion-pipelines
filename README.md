@@ -24,6 +24,16 @@ If you prefer cleaning data with Spark or SQL, or volumes are big enough to requ
 ## Technical timestamps
 I mentioned it few time, so to clarify: what are technical timestamps. Those are timestamps you add to each and every record whenever you process the data. At my current company, we are using Airflow to orchestrate the ETL pipelines, and this process adds 3 timestamps to each record:
 
+- First timestamp we use is usually an extraction timestamp. We add it to RAW file name, to make sure we have the information, when the data was extracted from the source. Once the data is transformed, we copy extraction timestamp to each record in transformed data
+
+- We store data interval start (and/or data interval end) to easily identify which DAG Run in Airflow was responsible for processing this data. Maybe we will later need to check logs of transformation or rerun it again.
+
+- transformation timestamp is set at the time when we actually run the transformer code. Maybe there is a problem with transformation code and you will need to add extra field or change some field’s formatting. So each time we rerun transformation, records will be marked with new transformation timestamp.
+
+- In case of ETL pipelines, you can also easily add ingestion timestamp. This marks a moment it time when you moved data from Staging to final destination table/area. This could be used to identify the freshes cleaning of data in this table.
+
+
+
 
 
 

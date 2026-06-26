@@ -7,3 +7,6 @@ Before we talk about design process, first some basic concepts. Might be obvious
 
 ## ETL vs ELT vs ETLT
 This is pretty much a common knowlege, so I will not spend much time on this topic. Depending on your prefered toolset and the destination data format, we have 3 ways to move the data from external system into our data store.
+
+<img width="851" height="382" alt="image" src="https://github.com/user-attachments/assets/9d4d5a22-7f84-42ab-97a4-36fa7a3aada9" />
+

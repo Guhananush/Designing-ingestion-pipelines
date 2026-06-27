@@ -74,6 +74,7 @@ If you have incremental download, you probably will use the field which is used 
 
 In either case, be aware that the granularity of those changes depends on how often you download the data. If the record in source was changed 3 times between your extractions, you will only have the last state and never even know about those two in between.
 
+Last thing to decide is how you load the data into the DWH — do the stakeholder care about the duplicates or not. Or maybe you have another layer/view in your DWH that will do deduplications for you? In case you need to get rid of duplicates, you probably will need to overwrite partitions. Which might be hard if you download data once every 2 hours, but partition by day. So you will have to solve this as well. But if the deduplication is a separate topic, you can just download the data over and over again, and technical timestamps should be used to figure out which is the newest/most up to date version of the object at any given point of time.
 
 
 

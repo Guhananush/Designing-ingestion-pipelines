@@ -45,6 +45,30 @@ Do we need only new data that shows up every day? Or maybe we will have to backf
 How often the data needs to be refreshed? Is once per day enough? Or once every 6/3/2 hours? Or maybe they need a streaming pipeline, which will continuously ingest events (then it’s not an ETL really).
 - Deadlines
 How much time do I have to prepare this data for stakeholders? Sometimes this could influence the design decision (ignore incremental, go for full download once per day, later we can improve)
+- Monitoring/alerting requirements
+Do we have to alert someone specific about problems with data? Who will be owner of this data? How we will be able to troubleshoot any data problems?
+
+## Step one: source analysis
+<img width="852" height="277" alt="image" src="https://github.com/user-attachments/assets/9e4f859a-a333-4a78-a63c-ac8562ea81c1" />
+
+In general, we have to available strategies of data extraction from the source. It will be either full download or incremental download. Full download is easy. Just extract everything from the data source and save it. Incremental is harder: you need records to have some kind of timestamp which tracks changes in this record. You might need some deletion information — tracking changes for modified or created records is easy, but when the record is gone, sources usually don’t report it to you during extraction. And in many cases, if the volume of data to download is low enough, incremental strategy is not worth it.       
+
+So when do we really prefer incremental downloads?
+
+- full download is not possible as there is too much data on each download. It might take hours to download all the data (including historical) of your ERP system. So incremental is probably a way to go.
+- we have a reliable way to track changes to the records. Which means we need some kind of updated_at or last_modification_ts field in source information.
+
+But beware, I’ve seen sources which are not really tables in source system, but composite views built by a join. And some fields, even if they have changed, do not trigger update of updated_at timestamp. It’s still possible to build incremental strategy, by adding this field to index identifying unique state of the object, but it’s always pain. You might need an additional full download (reconciliation) process running once a week on Sunday, to detect things you have missed.              
+
+Tracking deletions might be hard as well. Maybe your source has a companion _delete table (like Oracle RDS). Or maybe you will need to do reconciliation (full download?) to check what was deleted in the meantime. If you need to track deletions, sometimes it will not be easily achivable using incremental extraction strategy.   
+## Step two: destination analysis
+Destination analysis means working with your stakeholders. What do they expect in the data you will make available to them. And if you are doing full downloads, you still can track history if changes, you don’t have to mirror source one to one in your DWH system.           
+
+<img width="829" height="486" alt="image" src="https://github.com/user-attachments/assets/657c1924-bdf9-4379-a586-2bfe66038f3a" />
+
+First of all, it’s really very rare that we need to mirror the source system. This is Data Warehouse system after all, we want to track history. So even if our stakeholder claims he only needs to have “current state” view, we probably want to keep adding new states and store old for the sake of completeness. Just give them a view with max extraction timestamp for them to enjoy their mirror.
+
+If we have a full download, we will probably just layer it in our destination table. We can use one of the technical timestamps (my preference is usually extraction timestamp) to show how the table looked at any given moment in time.
 
 
 

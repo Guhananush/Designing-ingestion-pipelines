@@ -41,6 +41,10 @@ Before you actually start designing ingestion pipeline, you need to gather some 
 Who is waitig for this data? Whom do I approach when I have more questions? Who can help me to get access information — API key etc.? Whom do I report to the progress?
 - How much data           
 Do we need only new data that shows up every day? Or maybe we will have to backfill the information for last month or year? What is the daily volume of the data?
+- How often
+How often the data needs to be refreshed? Is once per day enough? Or once every 6/3/2 hours? Or maybe they need a streaming pipeline, which will continuously ingest events (then it’s not an ETL really).
+- Deadlines
+How much time do I have to prepare this data for stakeholders? Sometimes this could influence the design decision (ignore incremental, go for full download once per day, later we can improve)
 
 
 

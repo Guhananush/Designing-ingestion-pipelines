@@ -37,6 +37,10 @@ Most source systems are transactional databases, REST API endpoints, maybe a spr
 
 ### Step zero: ask questions
 Before you actually start designing ingestion pipeline, you need to gather some basic information. So ask and note:
+- Who is the stakeholder       
+Who is waitig for this data? Whom do I approach when I have more questions? Who can help me to get access information — API key etc.? Whom do I report to the progress?
+- How much data           
+Do we need only new data that shows up every day? Or maybe we will have to backfill the information for last month or year? What is the daily volume of the data?
 
 
 

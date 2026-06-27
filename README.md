@@ -32,6 +32,12 @@ I mentioned it few time, so to clarify: what are technical timestamps. Those are
 
 - In case of ETL pipelines, you can also easily add ingestion timestamp. This marks a moment it time when you moved data from Staging to final destination table/area. This could be used to identify the freshes cleaning of data in this table.
 
+## Designing ingestion pipelines
+Most source systems are transactional databases, REST API endpoints, maybe a spreadsheet, CSV files downloaded daily from an SFTP server etc. The one thing they have in common is that they hold only one state — current. What we really want to have in our Data Warehouse is a historical view on the data as it changed over time. This requires some very specific strategies to be implemented correctly.
+
+### Step zero: ask questions
+Before you actually start designing ingestion pipeline, you need to gather some basic information. So ask and note:
+
 
 
 

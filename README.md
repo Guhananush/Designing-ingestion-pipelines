@@ -70,6 +70,10 @@ First of all, it’s really very rare that we need to mirror the source system. 
 
 If we have a full download, we will probably just layer it in our destination table. We can use one of the technical timestamps (my preference is usually extraction timestamp) to show how the table looked at any given moment in time.
 
+If you have incremental download, you probably will use the field which is used to track changes as a way to see what was the value of the record at any given point of time. This way you can track changes to and compare records to find differences and where they were changed.
+
+In either case, be aware that the granularity of those changes depends on how often you download the data. If the record in source was changed 3 times between your extractions, you will only have the last state and never even know about those two in between.
+
 
 
 

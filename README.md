@@ -90,6 +90,17 @@ Good thing about this is, you can re-download the any time range at a later time
 
 The disadvantage of this is maintenance effort. Each time your pipeline fails, you are missing data in specified time range. So, f.e. in Airflow, you will have to rerun (manually) all the failed dag runs once the source is available again.
 
+### Differencial extraction
+
+<img width="849" height="316" alt="image" src="https://github.com/user-attachments/assets/92537421-6836-4c31-a12b-27fb9c45e3a1" />
+
+This strategy checks your DWH before you start extraction and uses the last timestamp you find there as data interval start. Then you create low watermark timestamp by substracting certain offset (depending on the source) from current extraction timestamp. This will be your data interval end. Now just send a query requesting all the objects that were modified between data interval start and end.
+
+Why we need offset for Low Watermark Timestamp? Source might be a big table which is updated/replicated only once every some time. Maybe records which were updated at 11:00, will show up in their reporting system 15 seconds later? This means if we use current Extraction Timestamp, we risk loosing some data. Therefore the offset it important.
+
+The nice thing about this strategy is that it’s autohealing pipeline. If for some reason the source was not available for extractions for few hours, you will still get all the new records once you finally manage to finish the download. So you never have to rerun past, failed DAG runs.
+
+The disadvantage might be how you deal with backfill. You can’t easily download the data that was updated in the past if you need it, you will always depend on your DWH to give you the timestamp to start the selection from source. So if you want to redownload and reprocess some older data, you might need to mock the response or delete data from DWH table. In my experience, this is very rarely a problem, but I remember it happened at least once to us.
 
 
 

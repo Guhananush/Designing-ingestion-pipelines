@@ -80,7 +80,6 @@ Last thing to decide is how you load the data into the DWH — do the stakeholde
 Once you decided you need incremental download strategy, you still have to figure out how you want to implement it. There are (at least) two ways to do it
 
 ### Time range extraction
-Press enter or click to view image in full size
 
 <img width="836" height="288" alt="image" src="https://github.com/user-attachments/assets/b210ac62-131d-4bcd-a84a-b9ddcb901339" />
 
@@ -101,6 +100,9 @@ Why we need offset for Low Watermark Timestamp? Source might be a big table whic
 The nice thing about this strategy is that it’s autohealing pipeline. If for some reason the source was not available for extractions for few hours, you will still get all the new records once you finally manage to finish the download. So you never have to rerun past, failed DAG runs.
 
 The disadvantage might be how you deal with backfill. You can’t easily download the data that was updated in the past if you need it, you will always depend on your DWH to give you the timestamp to start the selection from source. So if you want to redownload and reprocess some older data, you might need to mock the response or delete data from DWH table. In my experience, this is very rarely a problem, but I remember it happened at least once to us.
+
+## Final Thoughts
+Ingestion pipelines are the foundation of reliable data systems, and while they may seem simple at first glance, designing them well is both an art and a craft. I hope this breakdown of strategies, pitfalls, and lessons learned proves useful in your own projects. Feel free to adapt these patterns to your needs — and don’t forget those technical timestamps
 
 
 

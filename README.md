@@ -84,6 +84,12 @@ Press enter or click to view image in full size
 
 <img width="836" height="288" alt="image" src="https://github.com/user-attachments/assets/b210ac62-131d-4bcd-a84a-b9ddcb901339" />
 
+First strategy you can use is to extract data using specified time range. In Airflow, each time you run a DAG on schedule, you get system-defined data interval start and data interval end timestamps. You can use them to query the source system to send you only the records that were modified during this time range.
+
+Good thing about this is, you can re-download the any time range at a later time. You might not get exactly the same records (maybe they were modified later), but in case your RAW data was corrupted for whatever reason, it will be easier to backfill.
+
+The disadvantage of this is maintenance effort. Each time your pipeline fails, you are missing data in specified time range. So, f.e. in Airflow, you will have to rerun (manually) all the failed dag runs once the source is available again.
+
 
 
 

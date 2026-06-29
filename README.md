@@ -76,6 +76,13 @@ In either case, be aware that the granularity of those changes depends on how of
 
 Last thing to decide is how you load the data into the DWH — do the stakeholder care about the duplicates or not. Or maybe you have another layer/view in your DWH that will do deduplications for you? In case you need to get rid of duplicates, you probably will need to overwrite partitions. Which might be hard if you download data once every 2 hours, but partition by day. So you will have to solve this as well. But if the deduplication is a separate topic, you can just download the data over and over again, and technical timestamps should be used to figure out which is the newest/most up to date version of the object at any given point of time.
 
+## Incremental is hard
+Once you decided you need incremental download strategy, you still have to figure out how you want to implement it. There are (at least) two ways to do it
+
+### Time range extraction
+Press enter or click to view image in full size
+
+
 
 
 

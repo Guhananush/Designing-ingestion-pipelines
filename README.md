@@ -82,6 +82,11 @@ Once you decided you need incremental download strategy, you still have to figur
 ### Time range extraction
 Press enter or click to view image in full size
 
+<img width="836" height="288" alt="image" src="https://github.com/user-attachments/assets/b210ac62-131d-4bcd-a84a-b9ddcb901339" />
+
+
+
+
 
 
 
